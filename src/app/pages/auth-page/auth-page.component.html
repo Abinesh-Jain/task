@@ -1,0 +1,72 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title text-center">{{ isSignIn ? 'Sign In' : 'Sign Up' }}</h3>
+
+                    <!-- Sign In Form -->
+                    <form *ngIf="isSignIn" (ngSubmit)="onSignIn()">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" placeholder="Enter your email"
+                                [(ngModel)]="email" name="email" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" class="form-control" placeholder="Enter your password"
+                                [(ngModel)]="password" name="password" required />
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center p-3">
+                            <button type="submit" class="btn btn-primary btn-block" ngbTooltip="Sign In">
+                                <i class="bi bi-box-arrow-right"></i>
+                                Sign In
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Sign Up Form -->
+                    <form *ngIf="!isSignIn" (ngSubmit)="onSignUp()">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" class="form-control" placeholder="Enter your name"
+                                [(ngModel)]="name" name="name" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" placeholder="Enter your email"
+                                [(ngModel)]="email" name="email" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" class="form-control" placeholder="Create a password"
+                                [(ngModel)]="password" name="password" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input type="password" id="confirmPassword" class="form-control"
+                                placeholder="Confirm your password" [(ngModel)]="confirmPassword" name="confirmPassword"
+                                required />
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center p-3">
+                            <button type="submit" class="btn btn-success btn-block" ngbTooltip="Sign Up">
+                                <i class="bi bi-box-arrow-right"></i>
+                                Sign Up
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Toggle between Sign In and Sign Up -->
+                    <div class="text-center">
+                        <span *ngIf="isSignIn">
+                            Don't have an account? <a href="#" (click)="toggleAuth()">Sign Up</a>
+                        </span>
+                        <span *ngIf="!isSignIn">
+                            Already have an account? <a href="#" (click)="toggleAuth()">Sign In</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,94 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h2 class="text-center mb-4">Task Management</h2>
+
+            <!-- Add Task Button -->
+            <button class="btn btn-success mb-3" (click)="toggleTaskModal('add')" ngbTooltip="Add New Task">
+                <i class="bi bi-plus"></i>
+                Add New Task
+            </button>
+
+            <!-- Tasks List -->
+            <div *ngIf="tasks.length > 0; else noTasks">
+                <ul class="list-group">
+                    <li class="list-group-item" *ngFor="let task of tasks">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h5>{{ task.name }}</h5>
+                                <p>{{ task.description }}</p>
+                                <span class="badge badge-primary text-primary">{{ task.status | uppercase }}</span>
+                            </div>
+                            <div>
+                                <button class="btn btn-primary btn-sm" (click)="toggleTaskModal('edit', task)"
+                                    ngbTooltip="Edit">
+                                    <i class="bi bi-pencil-square"></i>
+                                    Edit
+                                </button>
+                                <div class="d-inline m-1"></div>
+                                <button class="btn btn-danger btn-sm" (click)="deleteTask(task._id)"
+                                    ngbTooltip="Delete">
+                                    <i class="bi bi-trash"></i>
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- No Tasks Message -->
+            <ng-template #noTasks>
+                <div class="alert alert-info text-center">
+                    No tasks available. Please add some tasks.
+                </div>
+            </ng-template>
+
+            <!-- Add/Edit Task Modal -->
+            <div class="modal" tabindex="-1" [ngClass]="{'show': isModalVisible}" style="display: block;"
+                *ngIf="isModalVisible">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-name">
+                                {{ modalMode === 'add' ? 'Add Task' : 'Edit Task' }}
+                            </h5>
+                            <button type="button" class="btn-close" (click)="closeModal()"> </button>
+                        </div>
+                        <div class="modal-body">
+                            <form (ngSubmit)="modalMode === 'add' ? addTask() : editTask()">
+                                <div class="form-group">
+                                    <label for="taskname">Name</label>
+                                    <input type="text" id="taskname" class="form-control" [(ngModel)]="taskForm.name"
+                                        name="name" required />
+                                </div>
+                                <div class="form-group">
+                                    <label for="taskDescription">Description</label>
+                                    <textarea id="taskDescription" class="form-control"
+                                        [(ngModel)]="taskForm.description" name="description" required>
+                                    </textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="taskStatus">Status</label>
+                                    <select id="taskStatus" class="form-control" [(ngModel)]="taskForm.status"
+                                        name="status">
+                                        <option value="pending">Pending</option>
+                                        <option value="in-progress">In Progress</option>
+                                        <option value="completed">Completed</option>
+                                    </select>
+                                </div>
+                                <div class="d-flex justify-content-center p-3">
+                                    <button type="submit" class="btn btn-primary btn-block"
+                                        ngbTooltip="{{ modalMode === 'add' ? 'Add Task' : 'Save Changes' }}">
+                                        <i class="bi bi-patch-plus"></i>
+                                        {{ modalMode === 'add' ? 'Add Task' : 'Save Changes' }}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
